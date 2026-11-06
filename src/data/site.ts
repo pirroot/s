@@ -1,0 +1,177 @@
+/**
+ * Static site content — v4 data model.
+ * One `Product` shape serves the homepage showcase, the /products catalogue
+ * row and the detail pages: cover + gallery (mediaIds into src/lib/media.ts),
+ * story paragraphs and label/value specs. Helpers give the catalogue order
+ * and prev/next navigation.
+ * When the admin panel arrives (phase 3) this data moves to a database —
+ * the shape mirrors the future models 1:1.
+ */
+
+export const SITE = {
+  name: "Batolite",
+  legalName: "Batolite Lighting",
+  tagline: "Sculpted light for contemporary spaces",
+  description:
+    "Batolite is a lighting studio crafting monochrome pendants, wall cylinders and discs. Step into the interactive showroom — one live room, five switch groups; flip them and watch the light answer.",
+  email: "hello@batolite.com", // TODO(client): replace with the real inbox
+  url: "https://batolite.com", // TODO(client): replace with the real domain
+  year: new Date().getFullYear(),
+};
+
+export type GalleryShot = {
+  mediaId: string; // key in src/lib/media.ts
+  caption: string;
+};
+
+export type Spec = { label: string; value: string };
+
+export type Product = {
+  slug: string;
+  name: string;
+  family: "Wall lights" | "Pendants";
+  index: string; // catalogue number, "01"…
+  tagline: string;
+  blurb: string; // one-liner for cards
+  paragraphs: string[]; // detail-page story
+  specs: Spec[];
+  finish: string;
+  cover: string; // studio photo mediaId
+  gallery: GalleryShot[]; // in-situ photographs
+};
+
+export const PRODUCTS: Product[] = [
+  {
+    slug: "tube-chalk",
+    name: "Tube — Chalk",
+    family: "Wall lights",
+    index: "01",
+    tagline: "The quiet cylinder",
+    blurb: "A quiet ceramic-white cylinder — a clean disc of light on any wall.",
+    paragraphs: [
+      "Tube began as a study of how little a wall needs: one cylinder, one disc of diffused light, nothing else. The chalk edition keeps the fixture nearly silent against pale plaster — by day it reads as a slim ceramic line; after dark it draws a clean ellipse of warm light above and below the aperture.",
+      "Surface-mounted and wired through a single concealed point, Tube suits bedrooms, corridors and kitchen runs — anywhere a room wants rhythm rather than decoration. The quartet in our reference apartment is this piece, dimmed to the room.",
+    ],
+    specs: [
+      { label: "Diameter", value: "⌀ 90 mm" },
+      { label: "Source", value: "2700 K · CRI 90" },
+      { label: "Power", value: "6 W — dimmable" },
+      { label: "Mounting", value: "Surface, up or down" },
+    ],
+    finish: "Chalk white — matte ceramic",
+    cover: "p1",
+    gallery: [
+      { mediaId: "g-tube-a", caption: "The quartet on the kitchen wall — each Tube grazing its own disc." },
+      { mediaId: "g-tube-b", caption: "Kitchen run in situ — Tubes with the counter strip beyond." },
+    ],
+  },
+  {
+    slug: "tube-graphite",
+    name: "Tube — Graphite",
+    family: "Wall lights",
+    index: "02",
+    tagline: "The quiet cylinder, in black",
+    blurb: "The cylinder in matte graphite: soft light, graphic presence.",
+    paragraphs: [
+      "The same cylinder, dressed in matte graphite. On dark walls the graphite Tube almost disappears — leaving only the light — while on pale walls it sharpens into a deliberate graphic tick, a punctuation mark on the plaster.",
+      "Interior architects reach for the graphite edition when a wall carries artwork or joinery: the fixture frames without competing, and the diffuser keeps the disc of light soft enough to sit beside almost anything.",
+    ],
+    specs: [
+      { label: "Diameter", value: "⌀ 90 mm" },
+      { label: "Source", value: "2700 K · CRI 90" },
+      { label: "Power", value: "6 W — dimmable" },
+      { label: "Mounting", value: "Surface, up or down" },
+    ],
+    finish: "Graphite black — matte powder-coat",
+    cover: "p2",
+    gallery: [
+      { mediaId: "g-tube-a", caption: "Four cylinders, one rhythm — the kitchen wall in full light." },
+      { mediaId: "g-tube-b", caption: "The run at dusk — quiet by day, composed after dark." },
+    ],
+  },
+  {
+    slug: "flute-concrete",
+    name: "Flute — Concrete",
+    family: "Pendants",
+    index: "03",
+    tagline: "A cone that narrows to a whisper",
+    blurb: "Matte white above, raw concrete below — a cone that pools light.",
+    paragraphs: [
+      "Flute is the studio's pendant: a spun cone that narrows until light becomes a single, deliberate pool. The concrete edition leaves the cast surface raw — every piece carries the faint texture of its mould, so no two are quite alike.",
+      "Hung in pairs over a table or an island, Flute pools light exactly where hands meet: chopping, dining, reading. The upper body stays matte white so the fixture keeps its silence against the ceiling.",
+    ],
+    specs: [
+      { label: "Diameter", value: "⌀ 180 mm" },
+      { label: "Source", value: "2700 K · CRI 90" },
+      { label: "Power", value: "8 W — dimmable" },
+      { label: "Suspension", value: "Pair, cable-hung" },
+    ],
+    finish: "Raw concrete — sealed matte",
+    cover: "p3",
+    gallery: [
+      { mediaId: "g-flute-a", caption: "The pair over the island — two pools of warm light." },
+      { mediaId: "g-wide", caption: "The room at full light — Flutes holding the centre." },
+    ],
+  },
+  {
+    slug: "flute-ornament",
+    name: "Flute — Ornament",
+    family: "Pendants",
+    index: "04",
+    tagline: "The classical Flute",
+    blurb: "The Flute silhouette with a carved classical band of vines and roses.",
+    paragraphs: [
+      "The Ornament edition keeps Flute's geometry and adds one concession to history: a carved band of vines and roses around the throat of the cone, cast in the same concrete and left unpolished.",
+      "It is the piece for rooms that lean classical — mouldings, stone, older joinery — and want a light that belongs there without pretending the century never happened. The band catches the uplight; the pool below stays pure Flute.",
+    ],
+    specs: [
+      { label: "Diameter", value: "⌀ 180 mm" },
+      { label: "Source", value: "2700 K · CRI 90" },
+      { label: "Power", value: "8 W — dimmable" },
+      { label: "Suspension", value: "Pair, cable-hung" },
+    ],
+    finish: "Concrete, carved classical band",
+    cover: "p4",
+    gallery: [
+      { mediaId: "g-flute-a", caption: "The classical band catching light above the island." },
+      { mediaId: "g-wide", caption: "Ornament in context — the whole room, every fitting lit." },
+    ],
+  },
+  {
+    slug: "eclipse",
+    name: "Eclipse",
+    family: "Pendants",
+    index: "05",
+    tagline: "The razor-thin disc",
+    blurb: "A razor-thin black disc with a polished core — light as a fine line.",
+    paragraphs: [
+      "Eclipse is the studio's exercise in restraint: a disc ground to a razor edge, suspended on almost invisible cables, reading as a fine black line against the ceiling by day.",
+      "After dark the polished core takes over — a ring of light with the source held perfectly out of view. Eclipse floats above tables and conversation pits; in the reference apartment it anchors the living half of the room.",
+    ],
+    specs: [
+      { label: "Diameter", value: "⌀ 420 mm" },
+      { label: "Source", value: "3000 K · CRI 90" },
+      { label: "Power", value: "12 W — dimmable" },
+      { label: "Suspension", value: "Triple cable, canopy ⌀ 60 mm" },
+    ],
+    finish: "Black anodised — polished core",
+    cover: "p5",
+    gallery: [
+      { mediaId: "g-eclipse-a", caption: "The disc above the table — a thin line, then a ring of light." },
+      { mediaId: "g-eclipse-b", caption: "Living side in situ — Eclipse anchoring the room." },
+    ],
+  },
+];
+
+/** Catalogue order helpers (the array order is the catalogue order). */
+export function productBySlug(slug: string): Product | undefined {
+  return PRODUCTS.find((p) => p.slug === slug);
+}
+
+export function productNeighbours(slug: string): { prev: Product; next: Product } {
+  const i = Math.max(0, PRODUCTS.findIndex((p) => p.slug === slug));
+  return {
+    prev: PRODUCTS[(i - 1 + PRODUCTS.length) % PRODUCTS.length],
+    next: PRODUCTS[(i + 1) % PRODUCTS.length],
+  };
+}
