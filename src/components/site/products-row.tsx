@@ -31,11 +31,16 @@ export function ProductsRow() {
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
-    sync();
+    /* initial measure deferred to the next frame — setState must not run
+       synchronously inside the effect (react-hooks/set-state-in-effect);
+       ResizeObserver also fires once on observe, this just keeps the first
+       paint exact */
+    const raf = requestAnimationFrame(sync);
     el.addEventListener("scroll", sync, { passive: true });
     const ro = new ResizeObserver(sync);
     ro.observe(el);
     return () => {
+      cancelAnimationFrame(raf);
       el.removeEventListener("scroll", sync);
       ro.disconnect();
     };

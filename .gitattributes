@@ -1,0 +1,4 @@
+upload/ export-ignore
+.tmp/ export-ignore
+agent-ctx/ export-ignore
+download/ export-ignore

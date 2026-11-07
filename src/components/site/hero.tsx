@@ -3,6 +3,28 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { Eyebrow, PillLink } from "./primitives";
 
+/**
+ * Interactive showroom hero — v4 "white gallery".
+ *
+ * The page is a classic white editorial spread: copy column on the left, and
+ * on desktop the live scene runs as a full-bleed background image flush with
+ * the right, top and bottom edges — no floating card. On mobile the scene
+ * sits edge-to-edge under the text block.
+ *
+ * v4.2 polish: the visible BATOLITE mark is stamped by the canvas against
+ * the BOX (never against the image), so the cover-crop can no longer slice
+ * it mid-word; the scene breathes in with a slow cinematic zoom-out; the
+ * switches glow warm (2700 K) when their group is lit; mobile gains a taller
+ * scene.
+ *
+ * The engine is unchanged from v3.1: the client's own high-res render set
+ * (4961px exports) — one raw frame with every fitting off (خام) plus one real
+ * render per light group, each diffed against its reference frame, so layer
+ * l1..l5 is a pure light contribution. Canvases stack with mix-blend
+ * plus-lighter, so flipping a switch fades ONLY that group's real light —
+ * bounce, falloff and shadows included. Five switches, four families.
+ */
+
 type Orient = "d" | "m";
 
 const LIGHTS = [
@@ -333,7 +355,7 @@ export function Hero() {
             data-protected
             onContextMenu={(e) => e.preventDefault()}
             onDragStart={(e) => e.preventDefault()}
-            className="relative h-[50svh] min-h-[340px] w-full overflow-hidden bg-[#2e2e2e] lg:h-full lg:min-h-0"
+            className="relative h-[50svh] min-h-[340px] w-full overflow-hidden bg-[#0b0b0b] lg:h-full lg:min-h-0"
           >
             {/* cinematic breath: the scene settles from a hair of zoom as it fades in */}
             <div
@@ -370,7 +392,7 @@ export function Hero() {
             {/* dock legibility gradient */}
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-28 bg-linear-to-t from-black/55 to-transparent"
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-28 bg-gradient-to-t from-black/55 to-transparent"
             />
 
             <p className="sr-only" aria-live="polite">

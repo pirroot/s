@@ -23,15 +23,18 @@ export function ProductsShowcase() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [mode, setMode] = useState<Mode>("row");
 
-  /* mode: desktop + fine pointer + motion allowed → scroll-driven glide */
+  /* mode: desktop + fine pointer + motion allowed → scroll-driven glide.
+     The initial read is deferred to the next frame — setState must not run
+     synchronously inside the effect (react-hooks/set-state-in-effect) */
   useEffect(() => {
     const mqTouch = window.matchMedia("(pointer: coarse)");
     const mqReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     const upd = () => setMode(mqTouch.matches || mqReduced.matches ? "row" : "scroll");
-    upd();
+    const raf = requestAnimationFrame(upd);
     mqTouch.addEventListener("change", upd);
     mqReduced.addEventListener("change", upd);
     return () => {
+      cancelAnimationFrame(raf);
       mqTouch.removeEventListener("change", upd);
       mqReduced.removeEventListener("change", upd);
     };
@@ -45,11 +48,12 @@ export function ProductsShowcase() {
     const track = trackRef.current;
     if (!runway || !stage || !track) return;
 
-    // if the row already fits, there is nothing to glide
+    // if the row already fits, there is nothing to glide — the fallback is
+    // deferred a frame so no setState runs synchronously in the effect
     const total = track.scrollWidth - stage.clientWidth;
     if (total <= 60) {
-      setMode("row");
-      return;
+      const raf = requestAnimationFrame(() => setMode("row"));
+      return () => cancelAnimationFrame(raf);
     }
 
     let target = 0;
