@@ -6,9 +6,12 @@
     "dev": "next dev -p 3000 2>&1 | tee dev.log",
     "build": "next build",
     "start": "next start -p 3000",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview"
   },
   "dependencies": {
+    "@opennextjs/cloudflare": "^1.20.16",
     "next": "^16.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -23,6 +26,7 @@
     "eslint-config-next": "^16.1.1",
     "tailwindcss": "^4.3.5",
     "tw-animate-css": "^1.3.5",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.158.0"
   }
 }
